@@ -1,0 +1,28 @@
+#!/bin/execlineb
+s6-envdir config
+cd src
+importas -D "" destdir destdir
+foreground {
+	make install DESTDIR=$destdir
+}
+foreground {
+	ln -sfT ubase-git ../../ubase
+}
+foreground {
+	foreground { mkdir -p ${destdir}/bin }
+	cd ${destdir}/bin
+	elglob -0 bins ../pkg/admin/ubase/bin/*
+	ln -sf $bins .
+}
+foreground {
+	foreground { mkdir -p ${destdir}/man/man1 }
+	cd ${destdir}/man/man1
+	elglob -0 man1s ../../pkg/admin/ubase/man/man1/*
+	ln -sf $man1s .
+}
+foreground {
+	foreground { mkdir -p ${destdir}/man/man8 }
+	cd ${destdir}/man/man8
+	elglob -0 man8s ../../pkg/admin/ubase/man/man8/*
+	ln -sf $man8s .
+}

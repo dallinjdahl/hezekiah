@@ -1,0 +1,46 @@
+diff --git a/libutil/tty.c b/libutil/tty.c
+index bceb01e..1f40e22 100644
+--- a/libutil/tty.c
++++ b/libutil/tty.c
+@@ -1,5 +1,5 @@
+ /* See LICENSE file for copyright and license details. */
+-#include <sys/types.h>
++#include <sys/sysmacros.h>
+ #include <sys/stat.h>
+ 
+ #include <fcntl.h>
+diff --git a/mountpoint.c b/mountpoint.c
+index 8f205a2..ec9df87 100644
+--- a/mountpoint.c
++++ b/mountpoint.c
+@@ -1,6 +1,6 @@
+ /* See LICENSE file for copyright and license details. */
+ #include <sys/stat.h>
+-#include <sys/types.h>
++#include <sys/sysmacros.h>
+ 
+ #include <mntent.h>
+ #include <stdio.h>
+diff --git a/stat.c b/stat.c
+index 220a659..75aba05 100644
+--- a/stat.c
++++ b/stat.c
+@@ -1,6 +1,6 @@
+ /* See LICENSE file for copyright and license details. */
+ #include <sys/stat.h>
+-#include <sys/types.h>
++#include <sys/sysmacros.h>
+ 
+ #include <inttypes.h>
+ #include <stdio.h>
+diff --git a/unshare.c b/unshare.c
+index 832c711..afee732 100644
+--- a/unshare.c
++++ b/unshare.c
+@@ -1,5 +1,5 @@
+ /* See LICENSE file for copyright and license details. */
+-#include <sched.h>
++#include <linux/sched.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
