@@ -1,8 +1,8 @@
 #!/bin/execlineb
-s6-envdir config
+s6-envdir -f config
 cd src
 foreground {
-	redirfd -r 0 ../patch/bins.diff
+	redirfd -r 0 ../patch/Makefile.diff
 	patch
 }
 multisubstitute {
@@ -14,6 +14,7 @@ multisubstitute {
 	importas cppflags cppflags
 	importas cflags cflags
 	importas ldflags ldflags
+	importas -Cs bins bins
 }
 foreground {
 	redirfd -w 1 config.mk
@@ -25,6 +26,10 @@ foreground {
 	foreground { echo RANLIB = $ranlib }
 	foreground { echo CPPFLAGS = $cppflags }
 	foreground { echo CFLAGS = $cflags }
-	echo LDFLAGS = $ldflags
+	foreground { echo LDFLAGS = $ldflags }
+	foreground { echo -n BIN = }
+	pipeline { echo $bins }
+	sed "s/ /\\\\\\n\\t/g"
+	
 }
 make
