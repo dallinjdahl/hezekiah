@@ -1,0 +1,21 @@
+#!/bin/execlineb
+s6-envdir config
+cd src
+importas -D "" destdir destdir
+foreground {
+	make install DESTDIR=$destdir
+}
+foreground {
+	ln -sfT sbase-git ../../sbase
+}
+foreground {
+	foreground { mkdir -p ${destdir}/bin }
+	cd ${destdir}/bin
+	elglob -0 bins ../pkg/admin/sbase/bin/*
+	ln -sf $bins .
+}
+
+foreground { mkdir -p ${destdir}/man/man1 }
+cd ${destdir}/man/man1
+elglob -0 man1s ../../pkg/admin/sbase/man/man1/*
+ln -sf $man1s .

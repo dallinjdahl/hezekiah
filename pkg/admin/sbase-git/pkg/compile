@@ -1,0 +1,30 @@
+#!/bin/execlineb
+s6-envdir config
+cd src
+foreground {
+	redirfd -r 0 ../patch/bins.diff
+	patch
+}
+multisubstitute {
+	importas prefix prefix
+	importas manprefix manprefix
+	importas cc cc
+	importas ar ar
+	importas ranlib ranlib
+	importas cppflags cppflags
+	importas cflags cflags
+	importas ldflags ldflags
+}
+foreground {
+	redirfd -w 1 config.mk
+	foreground { echo VERSION = 0.0 }
+	foreground { echo PREFIX = $prefix }
+	foreground { echo MANPREFIX = $manprefix }
+	foreground { echo CC = $cc }
+	foreground { echo AR = $ar }
+	foreground { echo RANLIB = $ranlib }
+	foreground { echo CPPFLAGS = $cppflags }
+	foreground { echo CFLAGS = $cflags }
+	echo LDFLAGS = $ldflags
+}
+make

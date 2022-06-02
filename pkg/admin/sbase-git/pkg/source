@@ -1,0 +1,2 @@
+#!/bin/execlineb
+git clone git://git.suckless.org/sbase src
