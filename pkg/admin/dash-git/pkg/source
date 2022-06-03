@@ -1,0 +1,2 @@
+#!/bin/execlineb
+git clone https://git.kernel.org/pub/scm/utils/dash/dash.git src

@@ -1,0 +1,213 @@
+cflags = -I. -I.. -DBSD=1 -DSHELL -Wall -g -O2
+CFLAGS = 
+CC = gcc
+
+<config.mk
+
+obj = alias.o\
+	arith_yacc.o\
+	arith_yylex.o\
+	cd.o\
+	error.o\
+	eval.o\
+	exec.o\
+	expand.o\
+	histedit.o\
+	input.o\
+	jobs.o\
+	mail.o\
+	main.o\
+	memalloc.o\
+	miscbltin.o\
+	mystring.o\
+	options.o\
+	parser.o\
+	redir.o\
+	show.o\
+	trap.o\
+	output.o\
+	bltin/printf.o\
+	system.o\
+	bltin/test.o\
+	bltin/times.o\
+	var.o\
+	builtins.o\
+	init.o\
+	nodes.o\
+	signames.o\
+	syntax.o
+
+dash: $obj 
+	$CC -Wall -g -O2  -static -Wl,--fatal-warnings -o $target $prereq
+
+alias.o: alias.c alias.h ../config.h error.h input.h memalloc.h mystring.h \
+		options.h output.h shell.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o alias.o alias.c
+ 
+arith_yacc.o: arith_yacc.c arith_yacc.h ../config.h error.h expand.h output.h \
+		shell.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o arith_yacc.o arith_yacc.c
+
+arith_yylex.o: arith_yylex.c arith_yacc.h ../config.h error.h expand.h \
+		memalloc.h shell.h syntax.h system.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o arith_yylex.o arith_yylex.c
+
+cd.o: cd.c cd.h ../config.h error.h exec.h jobs.h main.h memalloc.h \
+		mystring.h nodes.h options.h output.h redir.h shell.h show.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o cd.o cd.c
+
+error.o: error.c error.h ../config.h eval.h jobs.h main.h options.h output.h \
+		parser.h shell.h show.h system.h token.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o error.o error.c
+
+eval.o: eval.c eval.h ../config.h builtins.h error.h exec.h expand.h init.h \
+		input.h jobs.h main.h memalloc.h mystring.h nodes.h options.h \
+		output.h parser.h redir.h shell.h show.h syntax.h token.h trap.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o eval.o eval.c
+
+exec.o: exec.c exec.h ../config.h alias.h builtins.h error.h eval.h init.h \
+		jobs.h main.h memalloc.h mystring.h nodes.h options.h output.h \
+		parser.h redir.h shell.h show.h syntax.h system.h token.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o exec.o exec.c
+
+expand.o: expand.c expand.h ../config.h error.h eval.h jobs.h main.h \
+		memalloc.h mystring.h nodes.h options.h output.h parser.h shell.h \
+		show.h syntax.h system.h token.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o expand.o expand.c
+
+histedit.o: histedit.c ../config.h error.h main.h mystring.h options.h \
+		output.h parser.h shell.h token.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o histedit.o histedit.c
+
+input.o: input.c input.h ../config.h alias.h error.h eval.h main.h \
+		memalloc.h options.h output.h parser.h redir.h shell.h syntax.h \
+		token.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o input.o input.c
+
+jobs.o: jobs.c jobs.h ../config.h error.h eval.h exec.h init.h input.h \
+		main.h memalloc.h mystring.h nodes.h options.h output.h parser.h \
+		redir.h shell.h show.h syntax.h system.h token.h trap.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o jobs.o jobs.c
+
+mail.o: mail.c mail.h ../config.h error.h exec.h memalloc.h mystring.h \
+		nodes.h output.h shell.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o mail.o mail.c
+
+main.o: main.c main.h ../config.h error.h eval.h exec.h expand.h init.h \
+		input.h jobs.h mail.h memalloc.h mystring.h nodes.h options.h \
+		output.h parser.h shell.h show.h token.h trap.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o main.o main.c
+
+memalloc.o: memalloc.c memalloc.h ../config.h error.h machdep.h mystring.h \
+		output.h shell.h system.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o memalloc.o memalloc.c
+
+miscbltin.o: miscbltin.c miscbltin.h ../config.h error.h expand.h main.h \
+		memalloc.h mystring.h options.h output.h parser.h shell.h token.h \
+		trap.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o miscbltin.o miscbltin.c
+
+mystring.o: mystring.c mystring.h ../config.h error.h memalloc.h parser.h \
+		shell.h syntax.h system.h token.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o mystring.o mystring.c
+
+options.o: options.c options.h ../config.h error.h eval.h input.h jobs.h \
+		memalloc.h mystring.h nodes.h output.h shell.h show.h trap.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o options.o options.c
+
+parser.o: parser.c parser.h ../config.h error.h exec.h expand.h input.h \
+		memalloc.h mystring.h nodes.h options.h output.h shell.h show.h \
+		syntax.h system.h token.h token_vars.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o parser.o parser.c
+
+token_vars.h token.h: mktokens
+	/bin/sh mktokens
+
+redir.o: redir.c redir.h ../config.h error.h expand.h jobs.h main.h \
+		memalloc.h nodes.h options.h output.h shell.h trap.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o redir.o redir.c
+
+show.o: show.c show.h ../config.h mystring.h nodes.h options.h parser.h \
+		shell.h token.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o show.o show.c
+
+trap.o: trap.c trap.h ../config.h error.h eval.h init.h jobs.h main.h \
+		memalloc.h mystring.h nodes.h options.h output.h shell.h show.h \
+		syntax.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o trap.o trap.c
+
+output.o: output.c output.h ../config.h error.h main.h memalloc.h shell.h \
+		syntax.h system.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o output.o output.c
+
+bltin/printf.o: bltin/printf.c bltin/bltin.h ../config.h error.h \
+		memalloc.h mystring.h options.h output.h shell.h system.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o bltin/printf.o bltin/printf.c
+
+system.o: system.c system.h ../config.h error.h output.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o system.o system.c
+
+bltin/test.o: bltin/test.c bltin/bltin.h ../config.h error.h memalloc.h \
+		mystring.h options.h output.h shell.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o bltin/test.o bltin/test.c
+
+bltin/times.o: bltin/times.c bltin/bltin.h ../config.h error.h memalloc.h \
+		mystring.h options.h output.h shell.h system.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o bltin/times.o bltin/times.c
+	
+var.o: var.c var.h ../config.h error.h exec.h expand.h mail.h memalloc.h \
+		mystring.h nodes.h options.h output.h parser.h shell.h show.h \
+		syntax.h system.h token.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o var.o var.c
+
+builtins.o: builtins.c builtins.h ../config.h shell.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o builtins.o builtins.c
+
+builtins.h builtins.c: builtins.def mkbuiltins
+	/bin/sh mkbuiltins builtins.def
+
+builtins.def: builtins.def.in 
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -E -x c -o builtins.def builtins.def.in
+
+init.o: init.c init.h ../config.h cd.h error.h eval.h expand.h input.h \
+		memalloc.h mystring.h output.h parser.h redir.h shell.h token.h \
+		trap.h var.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o init.o init.c
+
+initdeps = alias.c arith_yacc.c arith_yylex.c cd.c error.c eval.c \
+		 exec.c expand.c histedit.c input.c jobs.c mail.c main.c memalloc.c \
+		 miscbltin.c mystring.c options.c parser.c redir.c show.c trap.c \
+		 output.c bltin/printf.c system.c bltin/test.c bltin/times.c var.c
+
+init.c: mkinit $initdeps
+	./mkinit $initdeps
+
+mkinit: mkinit.c
+	$CC $CFLAGS $cflags -o mkinit mkinit.c
+
+nodes.o: nodes.c ../config.h shell.h system.h nodes.h memalloc.h machdep.h mystring.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o nodes.o nodes.c
+
+nodes.c nodes.h: nodes.c.pat nodetypes mknodes
+	./mknodes nodetypes nodes.c.pat
+
+mknodes: mknodes.c
+	$CC $CFLAGS $cflags -o $target $prereq
+
+signames.o: signames.c ../config.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h  -c -o signames.o signames.c
+
+signames.c: mksignames
+	./$prereq
+
+mksignames: mksignames.c
+	$CC $CFLAGS $cflags -o mksignames mksignames.c
+
+syntax.o: syntax.c syntax.h ../config.h shell.h
+	$CC -DHAVE_CONFIG_H $CFLAGS $cflags -include ../config.h -c -o syntax.o syntax.c
+
+syntax.c syntax.h: mksyntax
+	./$prereq
+
+mksyntax: mksyntax.c token.h
+	$CC $CFLAGS $cflags -o mksyntax mksyntax.c

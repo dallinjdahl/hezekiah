@@ -1,0 +1,27 @@
+#!/bin/execlineb
+s6-envdir config
+foreground {
+	foreground { ln -sfT dash-git ../dash }
+	ln -sfT dash ../sh
+}
+cd src/src
+foreground {
+	foreground { mkdir -p ../../bin }
+	foreground { mkdir -p ../../man/man1 }
+	foreground { cp dash ../../bin }
+	foreground { cp dash.1 ../../man/man1 }
+}
+
+importas -D "" destdir destdir
+foreground {
+	foreground { mkdir -p ${destdir}/bin }
+	cd ${destdir}/bin
+	elglob -0 bins ../pkg/admin/dash/bin/*
+	foreground { ln -sf $bins . }
+	ln -sfT dash sh
+}
+foreground { mkdir -p ${destdir}/man/man1 }
+cd ${destdir}/man/man1
+elglob -0 man1s ../../pkg/admin/dash/man/man1/*
+foreground { ln -sf $man1s . }
+ln -sfT dash.1 sh.1

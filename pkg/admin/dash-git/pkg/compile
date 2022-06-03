@@ -1,0 +1,20 @@
+#!/bin/execlineb
+s6-envdir -f config
+cd src
+foreground {
+	cp ../pkg/config.h .
+}
+cd src
+foreground {
+	cp ../../pkg/mkfile .
+}
+multisubstitute {
+	importas cc cc
+	importas -D "" cflags cflags
+}
+foreground {
+	redirfd -w 1 config.mk
+	foreground { echo CC = $cc }
+	foreground { echo CFLAGS = $cflags }
+}
+mk
