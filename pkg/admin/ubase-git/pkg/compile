@@ -1,4 +1,5 @@
 #!/bin/execlineb
+s6-envdir ../../config
 s6-envdir -f config
 cd src
 foreground {
@@ -22,6 +23,7 @@ multisubstitute {
 	importas -Cs bins bins
 	importas -Cs man1 man1
 	importas -Cs man8 man8
+	importas -D "" destdir destdir
 }
 foreground {
 	redirfd -w 1 config.mk
@@ -49,4 +51,5 @@ foreground {
 	pipeline { echo $man8 }
 	sed "s/ /\\\\\\n\\t/g"
 }
-make
+foreground { make }
+make install DESTDIR=$destdir

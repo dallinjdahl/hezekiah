@@ -1,4 +1,5 @@
 #!/bin/execlineb
+s6-envdir ../../config
 s6-envdir -f config
 cd src
 foreground {
@@ -32,4 +33,6 @@ foreground {
 	sed "s/ /\\\\\\n\\t/g"
 	
 }
-make
+foreground { make }
+importas -D "" destdir destdir
+make install DESTDIR=$destdir

@@ -1,17 +1,10 @@
 #!/bin/execlineb
+s6-envdir ../../config
 s6-envdir config
 foreground {
 	foreground { ln -sfT dash-git ../dash }
 	ln -sfT dash ../sh
 }
-cd src/src
-foreground {
-	foreground { mkdir -p ../../bin }
-	foreground { mkdir -p ../../man/man1 }
-	foreground { cp dash ../../bin }
-	foreground { cp dash.1 ../../man/man1 }
-}
-
 importas -D "" destdir destdir
 foreground {
 	foreground { mkdir -p ${destdir}/bin }

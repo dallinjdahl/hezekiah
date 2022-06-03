@@ -1,5 +1,6 @@
 #!/bin/execlineb
-s6-envdir -f config
+s6-envdir ../../config
+s6-envdir config
 cd src
 foreground {
 	cp ../pkg/config.h .
@@ -7,6 +8,10 @@ foreground {
 cd src
 foreground {
 	cp ../../pkg/mkfile .
+}
+foreground {
+	redirfd -r 0 ../../patch/path.diff
+	patch
 }
 multisubstitute {
 	importas cc cc
@@ -17,4 +22,9 @@ foreground {
 	foreground { echo CC = $cc }
 	foreground { echo CFLAGS = $cflags }
 }
-mk
+foreground { mk }
+
+foreground { mkdir -p ../../bin }
+foreground { mkdir -p ../../man/man1 }
+foreground { cp dash ../../bin }
+cp dash.1 ../../man/man1

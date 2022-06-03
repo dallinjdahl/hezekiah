@@ -1,4 +1,5 @@
 #!/bin/execlineb
+s6-envdir ../../config
 s6-envdir config
 cd src
 importas -D "" destdir destdir

@@ -1,13 +1,11 @@
 #!/bin/execlineb
+s6-envdir ../../config
 s6-envdir config
 cd src
-importas -D "" destdir destdir
-foreground {
-	make install DESTDIR=$destdir
-}
 foreground {
 	ln -sfT ubase-git ../../ubase
 }
+importas -D "" destdir destdir
 foreground {
 	foreground { mkdir -p ${destdir}/bin }
 	cd ${destdir}/bin
